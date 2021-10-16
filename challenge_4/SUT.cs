@@ -41,7 +41,8 @@ namespace cancellation_practice.challenge_4
         /// https://github.com/App-vNext/Polly/blob/174cc53e17bf02da5e1f2c0d74dffb4f23aa99c0/src/Polly/Timeout/TimeoutEngine.cs#L24
         private CancellationToken GetCancellationToken(CancellationToken token)
         {
-            var newToken = CancellationTokenSource.CreateLinkedTokenSource(token, new CancellationTokenSource(TimeSpan.FromMilliseconds(1000)).Token);
+            var aToken = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000)).Token;
+            var newToken = CancellationTokenSource.CreateLinkedTokenSource(token, token);
             return newToken.Token;
         }
 

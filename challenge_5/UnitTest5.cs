@@ -14,16 +14,12 @@ namespace cancellation_practice.challenge_5
         [Fact]
         public async Task Test5()
         {
-            var timer = Task.Delay(100);
             var cancellationTokenSource = new CancellationTokenSource();
             var candyFetcher = new CandyFetcher();
             var cancellationToken = cancellationTokenSource.Token; 
             var candy = candyFetcher.FetchCandy(cancellationToken);
             cancellationTokenSource.Cancel(); 
-            await Assert.ThrowsAsync<TaskCanceledException>(async () => await candy);
-            Assert.False(timer.IsCompleted);
-
-
+            Assert.Equal(10, (await candy).Amount);
         }
     }
 }

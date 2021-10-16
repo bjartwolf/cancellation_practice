@@ -1,17 +1,10 @@
 using System;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace cancellation_practice.challenge_5
 {
-    public class PingResponse
-    {
-        public int MediaTypeVersion { get; set;  }
-    }
-   public class Candy
+    public class Candy
     {
         public readonly int Amount;
 
@@ -21,39 +14,25 @@ namespace cancellation_practice.challenge_5
         }
     }
 
-    /// <summary>
-    /// Update the method so that the test is passing
-    /// It is not a trick, it is just to understand the workflow
-    /// </summary>
-   public class CandyFetcher
+    public class CandyFetcher
     {
-        private readonly HttpClient _httpClient;
-
-        public CandyFetcher()
-        {
-            var serviceProvider = new ServiceCollection().AddHttpClient().BuildServiceProvider();
-            var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
-            _httpClient = httpClientFactory.CreateClient();
-        }
-
         /// <summary>
         /// This is the methods you are allowed to change the body of
         /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        private CancellationTokenSource getCancellationTokenSource(CancellationToken token)
+        private CancellationToken GetCancellationToken(CancellationToken token)
         {
-//         https://github.com/App-vNext/Polly/blob/174cc53e17bf02da5e1f2c0d74dffb4f23aa99c0/src/Polly/Timeout/TimeoutEngine.cs#L24
-           var newToken = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000)).Token;
-           var combinedToken = CancellationTokenSource.CreateLinkedTokenSource(token, token);
-           return combinedToken;
+            var newToken = new CancellationTokenSource(TimeSpan.FromMilliseconds(10)).Token;
+            var combinedToken = CancellationTokenSource.CreateLinkedTokenSource(newToken, token);
+            return combinedToken.Token;
         }
+
+        /// <summary>
+        /// Not allowed to touch this
+        /// </summary>
         public async Task<Candy> FetchCandy(CancellationToken token)
         {
-            using var newToken = getCancellationTokenSource(token);
-            var response = await _httpClient.GetStringAsync("https://psapi.nrk.no/ping", newToken.Token);
-            var deserialized = JsonSerializer.Deserialize<PingResponse>(response);
-            return new Candy(deserialized.MediaTypeVersion);
+            await Task.Delay(100, GetCancellationToken(token));
+            return new Candy(10);
         }
-        }
+    }
 }
