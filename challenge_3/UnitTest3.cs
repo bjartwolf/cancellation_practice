@@ -18,7 +18,7 @@ namespace cancellation_practice.challenge_3
         [Fact]
         public async Task Test3()
         {
-            var timer = Task.Delay(100);
+            var timer = Task.Delay(1000);
             var cancellationTokenSource = new CancellationTokenSource();
             var candyFetcher = new CandyFetcher();
             var cancellationToken = cancellationTokenSource.Token; 
