@@ -1,8 +1,7 @@
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace cancellation_practice.challenge_3
