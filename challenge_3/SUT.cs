@@ -1,11 +1,10 @@
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace cancellation_practice.challenge_3_2
+namespace cancellation_practice.challenge_3
 {
     public class PingResponse
     {
@@ -37,23 +36,9 @@ namespace cancellation_practice.challenge_3_2
         }
         public async Task<Candy> FetchCandy(CancellationToken cancellationToken)
         {
-            for(var i=0; i<2; i++)
-            {
-                await SomeSlowNonCancellableWork();
-            }
-            
-            var response = await _httpClient.GetStringAsync("https://psapi.nrk.no/ping",cancellationToken);
-            
+            var response = await _httpClient.GetStringAsync("https://psapi.nrk.no/ping");
             var deserialized = JsonSerializer.Deserialize<PingResponse>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
             return new Candy(deserialized.MediaTypeVersion);
-        }
-
-        /// <summary>
-        /// This should not be changed
-        /// </summary>
-        private static async Task SomeSlowNonCancellableWork()
-        {
-            await Task.Delay(1000);
         }
     }
 }

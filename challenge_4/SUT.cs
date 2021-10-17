@@ -1,4 +1,3 @@
-using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
@@ -35,26 +34,25 @@ namespace cancellation_practice.challenge_4
             var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
             _httpClient = httpClientFactory.CreateClient();
         }
-
-        /// <summary>
-        /// You are only allowed to change this methods
-        /// https://github.com/App-vNext/Polly/blob/174cc53e17bf02da5e1f2c0d74dffb4f23aa99c0/src/Polly/Timeout/TimeoutEngine.cs#L24
-        private CancellationToken GetCancellationToken(CancellationToken token)
+        public async Task<Candy> FetchCandy(CancellationToken cancellationToken)
         {
-            var aToken = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000)).Token;
-            var newToken = CancellationTokenSource.CreateLinkedTokenSource(token, token);
-            return newToken.Token;
+            for(var i=0; i<2; i++)
+            {
+                await SomeSlowNonCancellableWork();
+            }
+            
+            var response = await _httpClient.GetStringAsync("https://psapi.nrk.no/ping",cancellationToken);
+            
+            var deserialized = JsonSerializer.Deserialize<PingResponse>(response, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return new Candy(deserialized.MediaTypeVersion);
         }
 
         /// <summary>
-        /// Do not change anything here for this test 
+        /// This should not be changed
         /// </summary>
-        public async Task<Candy> FetchCandy(CancellationToken token)
+        private static async Task SomeSlowNonCancellableWork()
         {
-            var newToken = GetCancellationToken(token);
-            var response = await _httpClient.GetStringAsync( @"https://psapi.nrk.no/ping", newToken);
-            var deserialized = JsonSerializer.Deserialize<PingResponse>(response, new JsonSerializerOptions{PropertyNameCaseInsensitive = true});
-            return new Candy(deserialized.MediaTypeVersion);
+            await Task.Delay(1000);
         }
     }
 }

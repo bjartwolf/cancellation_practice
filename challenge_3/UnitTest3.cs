@@ -3,19 +3,19 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace cancellation_practice.challenge_3_1
+namespace cancellation_practice.challenge_3
 {
-    public class UnitTest31
+    public class UnitTest3
     {
         private readonly ITestOutputHelper _testOutputHelper;
 
-        public UnitTest31(ITestOutputHelper testOutputHelper)
+        public UnitTest3(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
-        public async Task Test31()
+        public async Task Test3()
         {
             var timer = Task.Delay(1000);
             var cancellationTokenSource = new CancellationTokenSource();
