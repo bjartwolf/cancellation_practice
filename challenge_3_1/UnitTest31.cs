@@ -1,22 +1,21 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace cancellation_practice.challenge_3
+namespace cancellation_practice.challenge_3_1
 {
-    public class UnitTest3
+    public class UnitTest31
     {
         private readonly ITestOutputHelper _testOutputHelper;
 
-        public UnitTest3(ITestOutputHelper testOutputHelper)
+        public UnitTest31(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
         }
 
         [Fact]
-        public async Task Test3()
+        public async Task Test31()
         {
             var timer = Task.Delay(1000);
             var cancellationTokenSource = new CancellationTokenSource();

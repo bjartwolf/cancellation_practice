@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace cancellation_practice.challenge_3
+namespace cancellation_practice.challenge_3_1
 {
     public class PingResponse
     {
