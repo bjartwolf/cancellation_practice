@@ -39,7 +39,6 @@ namespace cancellation_practice.challenge_3_2
         {
             for(var i=0; i<2; i++)
             {
-                // cancellationToken.ThrowIfCancellationRequested(); <-- This needs to be added
                 await SomeSlowNonCancellableWork();
             }
             
