@@ -24,7 +24,6 @@ namespace cancellation_practice.challenge_7
         /// </summary>
         private static async IAsyncEnumerable<Candy> Candies(long amount, [EnumeratorCancellation] CancellationToken ct)
         {
-            await Task.CompletedTask;
             var i = 0;
             while (i < amount && !ct.IsCancellationRequested)
             {
