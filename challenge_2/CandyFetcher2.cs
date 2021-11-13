@@ -23,5 +23,6 @@ namespace cancellation_practice.challenge_2
             await Task.Delay(100);
             return new Candy(10);
         }
-        }
+    }
 }
+

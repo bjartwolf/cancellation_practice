@@ -37,7 +37,7 @@ namespace cancellation_practice.challenge_5
         }
 
         /// <summary>
-        /// You are only allowed to change this methods
+        /// You are only allowed to change this method
         /// https://github.com/App-vNext/Polly/blob/174cc53e17bf02da5e1f2c0d74dffb4f23aa99c0/src/Polly/Timeout/TimeoutEngine.cs#L24
         private CancellationToken GetCancellationToken(CancellationToken token)
         {
