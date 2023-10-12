@@ -1,8 +1,7 @@
-using System;
 using System.Net;
 using Xunit;
 
-namespace cancellation_net5
+namespace cancellation_practice.cancellation_net5andnewer
 {
     using System;
     using System.Net.Http;
