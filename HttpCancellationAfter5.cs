@@ -31,7 +31,8 @@ namespace cancellation_net5
             var cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromMilliseconds(10));
             var ct = cancellationTokenSource.Token;
-            await Assert.ThrowsAsync<TaskCanceledException>(async () => await httpClient.GetAsync("https://example.com", ct));
+            var exception = await Assert.ThrowsAsync<TaskCanceledException>(async () => await httpClient.GetAsync("https://example.com", ct));
+            Assert.Null(exception.InnerException);
         }
 
         [Fact]
