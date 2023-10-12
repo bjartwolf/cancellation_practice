@@ -39,15 +39,7 @@ namespace cancellation_net3._1
 
             var exception = await Assert.ThrowsAsync<TaskCanceledException>(async () => await httpClient.GetAsync("https://example.com", CancellationToken.None));
 
-            if (exception.InnerException == null)
-            {
-                Assert.Null(exception.InnerException);
-            }
-            else
-            {
-                Assert.IsType<TimeoutException>(exception.InnerException);
-                Assert.IsType<TaskCanceledException>(exception.InnerException.InnerException);
-            }
+            Assert.Null(exception.InnerException);
         }
     }
 }
