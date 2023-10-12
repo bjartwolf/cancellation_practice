@@ -35,7 +35,7 @@ namespace cancellation_practice.cancellation_net5andnewer
         }
 
         [Fact]
-        public async Task Test2()
+        public async Task Get_HttpTimeout100msOnSlowResponse_CanDifferentiateFromCancellations()
         {
             var httpClient = new HttpClient(new FakeHttpMessageHandler())
             {

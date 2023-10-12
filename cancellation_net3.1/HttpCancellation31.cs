@@ -35,7 +35,7 @@ namespace cancellation_net3._1
         }
 
         [Fact]
-        public async Task Get_Timeout100msOnSlowResponse_MakesMeConfusedBecauseBothAreTrue()
+        public async Task Get_HttpTimeout100msOnSlowResponse_CanNotDifferentiateFromCancellations()
         {
             var httpClient = new HttpClient(new FakeHttpMessageHandler())
             {
