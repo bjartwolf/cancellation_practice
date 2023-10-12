@@ -17,6 +17,10 @@ namespace cancellation_net3._1
         }
     }
 
+    /// <summary>
+    /// In net core 3.1 we can not see the difference
+    /// fixed in net core 5 https://github.com/dotnet/runtime/pull/2281
+    /// </summary>
     public class HttpCancellation31
     {
         [Fact]
@@ -26,7 +30,8 @@ namespace cancellation_net3._1
             var cancellationTokenSource = new CancellationTokenSource();
             cancellationTokenSource.CancelAfter(TimeSpan.FromMilliseconds(10));
             var ct = cancellationTokenSource.Token;
-            await Assert.ThrowsAsync<TaskCanceledException>(async () => await httpClient.GetAsync("https://example.com", ct));
+            var exception = await Assert.ThrowsAsync<TaskCanceledException>(async () => await httpClient.GetAsync("https://example.com", ct));
+            Assert.Null(exception.InnerException);
         }
 
         [Fact]

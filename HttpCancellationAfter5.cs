@@ -18,6 +18,10 @@ namespace cancellation_net5
         }
     }
 
+    /// <summary>
+    /// Starting with net core 5 we can tell the difference
+    /// https://github.com/dotnet/runtime/pull/2281
+    /// </summary>
     public class HttpCancellationAfter5
     {
         [Fact]
